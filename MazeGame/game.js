@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   scoreboard[0].innerHTML = `score: ${score}`;
   let status = document.getElementById("status");
   let doc = document.getElementsByClassName("boundary");
+  console.log(typeof document.getElementById("status"));
 
   doc[0].addEventListener("mouseover", Lose);
   doc[1].addEventListener("mouseover", Lose);
@@ -13,17 +14,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   //if we lose
   function Lose() {
-    for (let i = 0; i < doc.length - 1; i++) {
-      doc[i].style.backgroundColor = "red";
+    if (status.innerHTML == `Begin by moving your mouse over the "S".`) {
+      for (let i = 0; i < doc.length - 1; i++) {
+        doc[i].style.backgroundColor = "red";
+      }
+      status.innerHTML = "YOU LOSE";
+      score -= 10;
+      scoreboard[0].innerHTML = `score: ${score}`;
     }
-    status.innerHTML = "YOU LOSE";
-    score -= 10;
-    scoreboard[0].innerHTML = `score: ${score}`;
   }
 
   // reset
   document.getElementById("start").addEventListener("click", function () {
-    status.innerHTML = `Begin by moving your mouse over the "S"`;
+    status.innerHTML = `Begin by moving your mouse over the "S".`;
     for (let i = 0; i < doc.length - 1; i++) {
       doc[i].style.backgroundColor = "rgb(238, 238, 238)";
     }
@@ -31,8 +34,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   //if we win
   document.getElementById("end").addEventListener("mouseover", function () {
-    status.innerHTML = "YOU WIN";
-    score += 5;
-    scoreboard[0].innerHTML = `score: ${score}`;
+    if (status.innerHTML == `Begin by moving your mouse over the "S".`) {
+      status.innerHTML = "YOU WIN";
+      score += 5;
+      scoreboard[0].textContent = `score: ${score}`;
+    }
   });
 });
